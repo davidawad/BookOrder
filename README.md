@@ -1,4 +1,3 @@
-#pa5
 #Multithreaded Book Order System
 ##[David Awad](https://davidawad.github.io)
 ##[Mariam Tsilosani](https://mariamtsilosani.github.io)
@@ -79,4 +78,3 @@ typedef struct custNode{
 
 ####Our BookOrder program is very careful about the validity of the input as well as it's thread management. The final source code amounted to 573 lines.
 
-#pa5
