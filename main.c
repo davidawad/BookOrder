@@ -366,23 +366,32 @@ int isRowFull(int i){ // 0 if empty , 1 if full
 }
 void *row_worker(void *p){
 	/*
-	annoying fix to get a simple argument from pthread_create.
-	what you are supposed to do is actually pass the address of the variable to the function.
-	we then use the * operator to dereference the pointer after casting it to an int pointer.
-	*/
+	   annoying fix to get a simple argument from pthread_create.
+	   what you are supposed to do is actually pass the address of the variable to the function.
+	   we then use the * operator to dereference the pointer after casting it to an int pointer.
+	 */
 	int cur = *((int *)p);
 	printf("Consumer Thread \x1b[33m %lu \x1b[0m is responsible for %s \n", syscall(SYS_gettid), categoryList[cur].name );
+	int error;	
 	while(1){
 		if( finished == 0 ){ //if the i'th row of the structure is NOT empty we need to interact with it by processing the orders.
-			pthread_mutex_lock(&categoryList[cur].mutex);//now we want to interact with the structure, lock the mutex
-			if(isRowFull(cur)){
-				orderNode* temp = categoryList[cur].list;
-				categoryList[cur].list = categoryList[cur].list->next;
-				processOrder(temp);
-				pthread_mutex_unlock(&categoryList[cur].mutex);
+			if( ( error = pthread_mutex_lock(&categoryList[cur].mutex)  )  == 0 ){ //now we want to interact with the structure, lock the mutex
+				if(isRowFull(cur)){
+					orderNode* temp = categoryList[cur].list;
+					categoryList[cur].list = categoryList[cur].list->next;
+					processOrder(temp);
+					pthread_mutex_unlock(&categoryList[cur].mutex);
+				}
+				else{
+					pthread_mutex_unlock(&categoryList[cur].mutex);
+				}
 			}
 			else{
-				pthread_mutex_unlock(&categoryList[cur].mutex);
+			//current thread suspended by mutex anyway, relinquish cpu for efficiency
+				if( (error = sched_yield() ) == -1 ){
+					printf("sched_yield() kept going in %s on line %d :%s \n", __FILE__ , __LINE__ , strerror(error)  );
+					_exit(1); //watch it burn
+				}
 			}
 		}
 		else{
@@ -529,7 +538,7 @@ int main(int argc, char **argv){
 	/*
 	   this gives us the full set of orders that we can
 	   then separate into the array of smaller queues based on the category.
-	*/
+	 */
 	fp = fopen(argv[3], "r");
 	fseek(fp, 0L, SEEK_END);
 	fSize = ftell(fp);
@@ -553,9 +562,9 @@ int main(int argc, char **argv){
 	}
 	createThreads();
 	/*create the consumer threads to wait for the producer,
-	force a join on the producer after we create the consumers
-	that way all threads are guaranteed to finish.
-	*/
+	  force a join on the producer after we create the consumers
+	  that way all threads are guaranteed to finish.
+	 */
 	if ( (error = pthread_join( tid, NULL )) ){
 		printf( "pthread_join() croaked in %s line %d: %s\n", __FILE__, __LINE__, strerror( error ) );
 		_exit( 1 );	// crash and burn
