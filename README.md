@@ -66,7 +66,7 @@ typedef struct custNode{
 
 ####The consumer threads are waiting for the producer to place the struct inside of the "row" of the array of orders that the consumers are responsible for. The consumer will see the order as soon as the mutex applied to that row is unlocked. 
 
-####We're left with a program that very efficiently handles space by only storing a maximum of (n) orders at a time.
+####We're left with a program that very efficiently handles space by NEVER storing all (n) orders at a time.
 
 ###Usage
 <hr>
