@@ -4,7 +4,6 @@
 <br>
 
 ###Design 
-<hr>
 
 
 ####The Book Order System was built as a solution to the producer consumer problem. In which we can get large amounts of input but only given a small, fixed space to handle it.
@@ -17,7 +16,6 @@
 ####Running the program will result in a colored terminal output that will show the producer and consumers *interleaving* and trading their access to this shared data structure. As the program runs the successful orders happen the consmer threads will log them to the user.
 
 ###Implementation 
-<hr>
 ####The key to this problem is that the number of categories is *crucial* to the success of the program. 
 
 ####We have to keep track of a lot of different data for both the customers and the orders.
@@ -69,7 +67,6 @@ typedef struct custNode{
 ####We're left with a program that very efficiently handles space by NEVER storing all (n) orders at a time.
 
 ###Usage
-<hr>
 ####The program can be run by running the command ```make```. 
 ####The makefile will generate an executable called ```bookOrder```.
 #### The program requires the following format. 
