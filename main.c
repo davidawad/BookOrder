@@ -557,7 +557,7 @@ int main(int argc, char **argv){
 	fp = fopen(argv[2], "r");
 	pthread_t	tid;
 	if ((error = pthread_create( &tid, NULL , readBookOrders , fp ))){
-		printf( "pthread_create() croaked in %s line %d: %s\n", __FILE__ , __LINE__ , strerror( error ) );
+		printf( "pthread_create() sparked the flames of revolution in %s line %d: %s\n", __FILE__ , __LINE__ , strerror( error ) );
 		_exit( 1 );	// crash and burn
 	}
 	createThreads();
@@ -566,7 +566,7 @@ int main(int argc, char **argv){
 	  that way all threads are guaranteed to finish.
 	 */
 	if ( (error = pthread_join( tid, NULL )) ){
-		printf( "pthread_join() croaked in %s line %d: %s\n", __FILE__, __LINE__, strerror( error ) );
+		printf( "pthread_join() joined the dark side in %s line %d: %s\n", __FILE__, __LINE__, strerror( error ) );
 		_exit( 1 );	// crash and burn
 	}
 
