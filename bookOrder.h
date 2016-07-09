@@ -9,10 +9,10 @@
 #ifndef BOOK_ORDER
 #define BOOK_ORDER
 
-#define NUM_THREADS    100
 #define ANSI_RESET     "\x1b[0m"
 #define GREEN          "\x1b[32m"
 
+/* struct definitions */
 typedef struct order{
     int    custID;
     char   processed;
@@ -49,7 +49,11 @@ typedef struct custNode{
 	struct custNode *next;
 } custNode;
 
+/* external shared variables */
+extern int numcats;
 extern int finished;
+extern int numcats;
+extern register int error;
 extern custNode *customerList;
 extern category *categoryList;
 

@@ -13,11 +13,11 @@
 
 #include     "bookOrder.h"
 
+#define NUM_THREADS    100
 
 void createThreads(){
 	int i;
 	pthread_t IDs[numcats];
-	unsigned int error;
 	for(i = 0; i < numcats; i++){
 		pthread_t	tid;
 		if ( (error = pthread_create( &tid, NULL, row_worker, &i )) ){//we make each thread responsible for the ith row of the producer
@@ -43,7 +43,6 @@ void *row_worker(void *p){
 	 */
 	int cur = *((int *)p);
 	printf("Consumer Thread \x1b[33m %lu \x1b[0m is responsible for %s \n", syscall(SYS_gettid), categoryList[cur].name );
-	int error;
 	while(1){
 		if( finished == 0 ){ //if the i'th row of the structure is NOT empty we need to interact with it by processing the orders.
 			if( ( error = pthread_mutex_lock(&categoryList[cur].mutex)  )  == 0 ){ //now we want to interact with the structure, lock the mutex
