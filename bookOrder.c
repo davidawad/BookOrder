@@ -24,9 +24,7 @@ int main(int argc, char **argv){
 		printf( "Must specify a Database File, book order file, and a category names. \n Feel Free to refer to the readme for usage.\n" );
 		_exit( 1 );	// crash and burn
 	}
-	unsigned int error;
 	FILE *fp;
-    int numcats;
     double totalProfit;
 
 	if( (fp = fopen(argv[1], "r") ) == NULL){
