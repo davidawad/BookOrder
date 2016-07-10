@@ -53,7 +53,7 @@ typedef struct custNode{
 extern int numcats;
 extern int finished;
 extern int numcats;
-extern register int error;
+extern int error;
 extern custNode *customerList;
 extern category *categoryList;
 

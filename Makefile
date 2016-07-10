@@ -1,11 +1,10 @@
 CC = gcc
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -pthread
 
 all: main
 
 main: clean
-	$(CC) $(CFLAGS) -o bookOrder bookOrder.c -lpthread
-
+	$(CC) $(CFLAGS)  bookOrder.c cust.c order.c util.c category.c -o bookOrder
 run: main
 	./bookOrder database.txt orders.txt categories.txt
 
