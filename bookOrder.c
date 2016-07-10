@@ -14,10 +14,12 @@
 #include    "bookOrder.h"
 
 
+int error;
 int finished = 0;
+int numcats = 0;
+double totalProfit;
 custNode *customerList;
 category *categoryList;
-
 
 int main(int argc, char **argv){
 	if( argc != 4 ){
@@ -25,19 +27,18 @@ int main(int argc, char **argv){
 		_exit( 1 );	// crash and burn
 	}
 	FILE *fp;
-    double totalProfit;
 
-	if( (fp = fopen(argv[1], "r") ) == NULL){
+	if( (fp = fopen(argv[1], "r") ) == NULL ) {
 		printf("fopen didn't work in %s line %d.\n", __FILE__ , __LINE__ );
 		printf("Please Enter Valid Database File \n");
 		_exit(1); // crash and burn
 	}
-	else if( (fp = fopen(argv[2], "r") ) == NULL){
+	else if( (fp = fopen(argv[2], "r") ) == NULL ) {
 		printf("fopen didn't work in %s line %d.\n", __FILE__ , __LINE__ );
 		printf("Please Enter Valid Book Order File \n");
 		_exit(1); // crash and burn
 	}
-	else if( (fp = fopen(argv[3], "r") ) == NULL ){
+	else if( (fp = fopen(argv[3], "r") ) == NULL ) {
 		printf("fopen didn't work in %s line %d.\n", __FILE__ , __LINE__ );
 		printf("Please Enter Valid Category File \n");
 		_exit(1); // crash and burn
@@ -99,6 +100,6 @@ int main(int argc, char **argv){
 	}
 	finalReport();
 	free(categoryList);
-	printf("Total Revenue Gained: GREEN$ANSI_RESET%.2lf\n", totalProfit);
+	printf("Total Revenue Gained: \x1b[32m$\x1b[0m%.2lf\n", totalProfit);
 	return 0; //success
 }

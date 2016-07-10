@@ -16,7 +16,7 @@
 
 
 void *readBookOrders(void *p){ //reads the book order file and sets up our queue
-	printf("Thread \x1b[36m %lu \x1b[0m is the producer \n", syscall(SYS_gettid));
+	printf("Thread \x1b[36m%lu\x1b[0m is the producer \n", syscall(SYS_gettid));
 	FILE   *fp = (FILE *)p;
 	int    size;
 	size_t fSize;

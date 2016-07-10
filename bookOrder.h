@@ -12,6 +12,8 @@
 #define ANSI_RESET     "\x1b[0m"
 #define GREEN          "\x1b[32m"
 
+#define YELLOW         "\x1b[36m"
+
 /* struct definitions */
 typedef struct order{
     int    custID;
@@ -56,6 +58,7 @@ extern int numcats;
 extern int error;
 extern custNode *customerList;
 extern category *categoryList;
+extern double totalProfit;
 
 /* Customer Node functions - cust.c */
 custNode *readDatabase(FILE*);
@@ -63,7 +66,7 @@ custNode *attachCustNode(custNode*, customer*);
 
 void freeCustomer();
 void freeCustListNode(custNode*);
-void printCustomers(custNode);
+void printCustomers(custNode*);
 
 /* Book Order Node Functions - order.c */
 void *readBookOrders(void*);
